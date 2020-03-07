@@ -3,6 +3,7 @@
 <title>Daily Tracker</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script> 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -10,6 +11,7 @@
 html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 </style>
 <body class="w3-light-grey">
+
  
 <!-- Page Container -->
 <div class="w3-content w3-margin-top" style="max-width:1400px;">
@@ -22,7 +24,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
    
       <div class="w3-white w3-text-grey w3-card-4">
         <div class="w3-display-container">
-          <img src="/w3images/avatar_hat.jpg" style="width:100%" alt="Avatar">
+          <img src="lady.jpg" style="width:100%" alt="Avatar">
           <div class="w3-display-bottomleft w3-container w3-text-black">
             <h2>Jane Doe</h2>
           </div>
@@ -48,47 +50,17 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
                 else if (sex == "Female") {
                     calories = 66 + (6.2 * weight) + (12.7 * height) + (-6.76 * age);
                 }
-                document.getElementById("BMR").innerHTML = calories;
+                document.getElementById("BMR").innerHTML = Math.round(calories);
             </script>
             <br />
             <p>Calories burned today: <p id="burned" style="display:inline">0</p></p>
+            <br>
+            <p>Calories consumed today: <p id="food">0</p></p>
+            <br>
+            <p>Amount of sleep last night:<p id="sleep"></p></p>
           <hr>
  
-          <p class="w3-large"><b><i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>Skills</b></p>
-          <p>Adobe Photoshop</p>
-          <div class="w3-light-grey w3-round-xlarge w3-small">
-            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:90%">90%</div>
-          </div>
-          <p>Photography</p>
-          <div class="w3-light-grey w3-round-xlarge w3-small">
-            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:80%">
-              <div class="w3-center w3-text-white">80%</div>
-            </div>
-          </div>
-          <p>Illustrator</p>
-          <div class="w3-light-grey w3-round-xlarge w3-small">
-            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:75%">75%</div>
-          </div>
-          <p>Media</p>
-          <div class="w3-light-grey w3-round-xlarge w3-small">
-            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:50%">50%</div>
-          </div>
-          <br>
- 
-          <p class="w3-large w3-text-theme"><b><i class="fa fa-globe fa-fw w3-margin-right w3-text-teal"></i>Languages</b></p>
-          <p>English</p>
-          <div class="w3-light-grey w3-round-xlarge">
-            <div class="w3-round-xlarge w3-teal" style="height:24px;width:100%"></div>
-          </div>
-          <p>Spanish</p>
-          <div class="w3-light-grey w3-round-xlarge">
-            <div class="w3-round-xlarge w3-teal" style="height:24px;width:55%"></div>
-          </div>
-          <p>German</p>
-          <div class="w3-light-grey w3-round-xlarge">
-            <div class="w3-round-xlarge w3-teal" style="height:24px;width:25%"></div>
-          </div>
-          <br>
+          
         </div>
       </div><br>
  
@@ -105,21 +77,57 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
           <form onsubmit="burned()">
           <p><label for="exercise">Select your exercise:</label>
             <select id="exercise">
-              <option value="1">Basketball</option>
-              <option value="1">Baseball</option>
-              <option value="1">Running</option>
-              <option value="1">Yoga</option>
+              <option value="8">Basketball</option>
+              <option value="5">Baseball</option>
+              <option value="7">Running</option>
+              <option value="3">Yoga</option>
             </select></p>
-            <input type="submit" value="Submit">
+            <p>How long did you exercise for? (In minutes)</p><input id="burnedTime" value="1">
+            <input type="button" onclick="burned()" value="Submit">
            </form>
-
             <script>
-                var test;
                 function burned() {
-                    document.getElementById("burned").innerHTML = parseInt(document.getElementById("burned").innerHTML) + 1.5;
+                    document.getElementById("burned").innerHTML = Math.round(parseInt(document.getElementById("burned").innerHTML) +
+                        ((document.getElementById("burnedTime").value * parseInt(document.getElementById("exercise").value) * 3.5 / 2.2046 * document.getElementById("weight").innerHTML) / 200));
                 }
             </script>
           <hr>
+            <h5 class="w3-opacity"><b>Last nights sleep</b></h5>
+            <p>How much did you sleep last night? (In hours)</p> <input id="sleepInput"> <input type="button" onclick="sleep()" value="Submit">
+            <script>
+                function sleep(){
+                    document.getElementById("sleep").innerHTML = document.getElementById("sleepInput").value + " hours";
+                }
+            </script>
+        <hr>
+            <h5 class="w3-opacity"><b>Nutritional intake</b></h5>
+            <form onsubmit="foodIntake()">
+          <p><label for="foodTable">Select your food:</label>
+            <select id="foodTable">
+              <option value="70">Noodles</option>
+              <option value="70">Potatoes</option>
+              <option value="140">Rice</option>
+              <option value="200">Chicken</option>
+              <option value="200">Chicken</option>
+                <option value="240">Ham</option>
+                <option value="290">Pork</option>
+                <option value="160">Turkey</option>
+                <option value="65">Banana</option>
+                <option value="440">Cheese</option>
+                <option value="70">Milk whole</option>
+                <option value="60">Yogurt</option>
+            </select></p>
+            <p>How much of the food did you eat? (In ounces)</p><input id="foodAmount" value="1">
+            <input type="button" onclick="foodIntake()" value="Submit">
+           </form>
+            <script>
+                function foodIntake() {
+                    document.getElementById("food").innerHTML = Math.round(parseInt(document.getElementById("food").innerHTML)+
+                        (parseInt(document.getElementById("foodAmount").value) * parseInt(document.getElementById("foodTable").value) ) /3.5 );
+                }
+            </script>
+          <hr>
+        <hr>
         </div>
       </div>
  
